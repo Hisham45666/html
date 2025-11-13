@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Calendar Generator</title>
+  <style>
+    body { font-family: Arial; text-align: center; margin: 30px; }
+    table { border-collapse: collapse; margin: 20px auto; }
+    th, td { border: 1px solid #555; padding: 5px 10px; text-align: center; }
+    th { background-color: #eee; }
+    h2 { color: darkblue; }
+  </style>
+</head>
+<body>
+
+  <h2>Generate Calendar Using JavaScript</h2>
+  <label>Enter Year: </label>
+  <input type="number" id="yearInput" placeholder="e.g. 2025">
+  <button onclick="generateCalendar()">Generate</button>
+
+  <div id="calendar"></div>
+
+  <script>
+    function generateCalendar() {
+      const year = document.getElementById("yearInput").value;
+      const calendarDiv = document.getElementById("calendar");
+      calendarDiv.innerHTML = ""; 
+
+      if (!year) {
+        alert("Please enter a year!");
+        return;
+      }
+
+      const months = [
+        "January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"
+      ];
+
+      for (let m = 0; m < 12; m++) {
+        const firstDay = new Date(year, m, 1).getDay();
+        const daysInMonth = new Date(year, m + 1, 0).getDate();
+
+        let table = `<h3>${months[m]} ${year}</h3>`;
+        table += `<table><tr>
+                    <th>Sun</th><th>Mon</th><th>Tue</th>
+                    <th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th>
+                  </tr><tr>`;
+
+       
+        for (let i = 0; i < firstDay; i++) table += "<td></td>";
+
+        
+        for (let day = 1; day <= daysInMonth; day++) {
+          table += `<td>${day}</td>`;
+          if ((firstDay + day) % 7 === 0) table += "</tr><tr>";
+        }
+
+        table += "</tr></table>";
+        calendarDiv.innerHTML += table;
+      }
+    }
+  </script>
+
+</body>
+</html>
